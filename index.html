@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MIS-COGERH · Relatório Parcial do PTT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul-profundo:#00294D;   /* navy institucional */
+  --azul-cogerh:#005CA9;     /* azul primário COGERH */
+  --azul-medio:#1B7FD4;
+  --azul-agua:#5FB4E5;
+  --azul-nevoa:#E8F2FA;
+  --branco:#FFFFFF;
+  --cinza-texto:#33414E;
+  --cinza-suave:#6B7B88;
+  --linha:#CFE1EF;
+  --verde:#2E9E5B; --amarelo:#E7A600; --vermelho:#D64545;
+  --radius:14px;
+  --sombra:0 10px 30px rgba(0,41,77,.10);
+  --maxw:1080px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Source Sans 3',sans-serif;
+  color:var(--cinza-texto);
+  background:var(--branco);
+  line-height:1.65;
+  font-size:16.5px;
+}
+h1,h2,h3,h4{font-family:'Archivo',sans-serif;color:var(--azul-profundo);line-height:1.2}
+.mono{font-family:'IBM Plex Mono',monospace}
+
+/* ---------- NAV ---------- */
+header{
+  position:sticky;top:0;z-index:100;
+  background:var(--azul-profundo);
+  border-bottom:3px solid var(--azul-agua);
+}
+.nav-inner{
+  max-width:var(--maxw);margin:0 auto;padding:0 20px;
+  display:flex;align-items:center;justify-content:space-between;height:64px;
+}
+.brand{display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none}
+.brand .drop{
+  width:30px;height:30px;flex-shrink:0;
+}
+.brand-name{font-family:'Archivo';font-weight:800;font-size:1.05rem;letter-spacing:.02em}
+.brand-name small{display:block;font-weight:500;font-size:.62rem;letter-spacing:.14em;color:var(--azul-agua);text-transform:uppercase}
+nav.menu{display:flex;gap:4px}
+nav.menu button{
+  font-family:'Archivo';font-weight:600;font-size:.82rem;letter-spacing:.03em;
+  background:transparent;border:none;color:#BFD9EE;padding:9px 14px;border-radius:8px;
+  cursor:pointer;transition:.18s;
+}
+nav.menu button:hover{background:rgba(255,255,255,.10);color:#fff}
+nav.menu button.active{background:var(--azul-cogerh);color:#fff}
+nav.menu button:focus-visible{outline:2px solid var(--azul-agua);outline-offset:2px}
+.hamb{display:none;background:none;border:none;cursor:pointer;padding:8px}
+.hamb span{display:block;width:24px;height:2.5px;background:#fff;margin:5px 0;border-radius:2px;transition:.25s}
+@media(max-width:880px){
+  .hamb{display:block}
+  nav.menu{
+    position:absolute;top:64px;left:0;right:0;flex-direction:column;
+    background:var(--azul-profundo);padding:10px 16px 16px;gap:6px;
+    transform:translateY(-140%);transition:.3s;box-shadow:var(--sombra);
+  }
+  nav.menu.open{transform:translateY(0)}
+  nav.menu button{text-align:left;font-size:.95rem}
+}
+
+/* ---------- LAYOUT ---------- */
+main{max-width:var(--maxw);margin:0 auto;padding:0 20px 90px}
+section.page{display:none;animation:fade .35s ease}
+section.page.show{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){section.page{animation:none}}
+
+.eyebrow{
+  display:inline-block;font-family:'Archivo';font-weight:700;font-size:.72rem;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--azul-cogerh);
+  border-left:4px solid var(--azul-agua);padding-left:10px;margin:56px 0 10px;
+}
+h2.title{font-size:clamp(1.6rem,3.4vw,2.3rem);font-weight:800;margin-bottom:18px}
+h3{font-size:1.15rem;margin:34px 0 10px;font-weight:700}
+p{margin-bottom:14px;max-width:75ch}
+p.lead{font-size:1.12rem;color:#22303C}
+
+/* ---------- HERO / HOME ---------- */
+.hero{
+  background:linear-gradient(160deg,var(--azul-profundo) 0%,var(--azul-cogerh) 70%,var(--azul-medio) 100%);
+  color:#fff;border-radius:0 0 26px 26px;
+  margin:0 -20px;padding:64px 20px 56px;position:relative;overflow:hidden;
+}
+.hero::after{ /* onda assinatura */
+  content:"";position:absolute;left:0;right:0;bottom:-2px;height:60px;
+  background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60 Z" fill="white"/></svg>') repeat-x;
+  background-size:cover;
+}
+.hero-inner{max-width:var(--maxw);margin:0 auto}
+.hero .tag{
+  font-family:'IBM Plex Mono';font-size:.75rem;letter-spacing:.1em;
+  background:rgba(255,255,255,.14);padding:6px 12px;border-radius:99px;display:inline-block;margin-bottom:18px;
+}
+.hero h1{color:#fff;font-size:clamp(1.9rem,4.5vw,3rem);font-weight:800;max-width:20ch;margin-bottom:14px}
+.hero p{color:#D8EAF8;font-size:1.08rem;max-width:62ch}
+.hero .meta{
+  display:flex;flex-wrap:wrap;gap:22px;margin-top:26px;font-size:.86rem;color:#BFD9EE;
+}
+.hero .meta b{display:block;color:#fff;font-family:'Archivo';font-size:.95rem}
+
+/* video */
+.video-block{margin-top:48px}
+.video-block h3{color:var(--azul-profundo)}
+.video-frame{
+  background:var(--azul-profundo);border-radius:var(--radius);overflow:hidden;
+  box-shadow:var(--sombra);border:1px solid var(--linha);
+  aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;position:relative;
+}
+.video-frame video{width:100%;height:100%;display:block;background:#001B33}
+.video-fallback{
+  position:absolute;inset:0;display:flex;flex-direction:column;gap:10px;
+  align-items:center;justify-content:center;color:#BFD9EE;text-align:center;padding:24px;
+  background:radial-gradient(ellipse at center,#004A87 0%,#00294D 75%);
+}
+.video-fallback .play{
+  width:66px;height:66px;border-radius:50%;background:rgba(255,255,255,.16);
+  display:flex;align-items:center;justify-content:center;border:2px solid rgba(255,255,255,.5);
+}
+.video-fallback .play svg{margin-left:5px}
+.video-caption{font-size:.82rem;color:var(--cinza-suave);margin-top:8px}
+
+/* cards das dimensões */
+.dims{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:44px}
+@media(max-width:880px){.dims{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.dims{grid-template-columns:1fr}}
+.dim-card{
+  background:var(--azul-nevoa);border:1px solid var(--linha);border-radius:var(--radius);
+  padding:20px 18px;transition:.2s;
+}
+.dim-card:hover{transform:translateY(-3px);box-shadow:var(--sombra)}
+.dim-card .letra{
+  font-family:'Archivo';font-weight:800;font-size:1.6rem;color:var(--branco);
+  background:var(--azul-cogerh);width:44px;height:44px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;margin-bottom:12px;
+}
+.dim-card h4{font-size:1rem;margin-bottom:6px}
+.dim-card p{font-size:.85rem;color:var(--cinza-suave);margin:0}
+
+/* ---------- COMPONENTES ---------- */
+.tabela-wrap{overflow-x:auto;border:1px solid var(--linha);border-radius:var(--radius);box-shadow:var(--sombra);margin:18px 0 8px;background:#fff}
+table{border-collapse:collapse;width:100%;min-width:680px;font-size:.88rem}
+caption{caption-side:top;text-align:left;font-family:'Archivo';font-weight:700;color:var(--azul-profundo);padding:14px 16px 6px;font-size:.95rem}
+th{
+  background:var(--azul-profundo);color:#fff;font-family:'Archivo';font-weight:600;
+  font-size:.76rem;letter-spacing:.05em;text-transform:uppercase;padding:11px 12px;text-align:left;
+}
+td{padding:10px 12px;border-top:1px solid var(--linha);vertical-align:top}
+tbody tr:nth-child(even){background:var(--azul-nevoa)}
+.badge{
+  display:inline-flex;align-items:center;justify-content:center;
+  font-family:'Archivo';font-weight:800;font-size:.8rem;color:#fff;
+  width:26px;height:26px;border-radius:7px;
+}
+.bA{background:#1F7A4D}.bS{background:#B06A00}.bG{background:var(--azul-cogerh)}.bC{background:#5A4FB5}
+.formula{font-family:'IBM Plex Mono';font-size:.78rem;background:var(--azul-nevoa);border:1px solid var(--linha);border-radius:6px;padding:2px 7px;display:inline-block}
+.fonte-nota{font-size:.8rem;color:var(--cinza-suave);margin:6px 2px 0}
+.legenda{font-size:.82rem;color:var(--cinza-suave);margin-top:6px}
+.legenda b{color:var(--azul-profundo)}
+
+.callout{
+  background:var(--azul-nevoa);border-left:5px solid var(--azul-cogerh);
+  border-radius:0 var(--radius) var(--radius) 0;padding:18px 20px;margin:22px 0;
+}
+.callout p:last-child{margin:0}
+
+/* arquitetura fig 3 */
+.arq{border:1px solid var(--linha);border-radius:var(--radius);overflow:hidden;box-shadow:var(--sombra);margin:18px 0 8px}
+.arq .topo{background:var(--azul-profundo);color:#fff;padding:16px 20px;font-family:'Archivo';font-weight:700;text-align:center}
+.arq .camada{padding:13px 20px;border-top:1px solid var(--linha);display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+.arq .camada .rotulo{font-family:'Archivo';font-weight:700;color:var(--azul-cogerh);min-width:150px;font-size:.9rem}
+.arq .camada .cont{font-size:.9rem;color:var(--cinza-texto)}
+.arq .eixo{background:linear-gradient(90deg,var(--azul-agua),var(--azul-medio));color:#fff}
+.arq .eixo .rotulo,.arq .eixo .cont{color:#fff}
+.arq .base{background:var(--azul-nevoa);text-align:center;justify-content:center}
+
+/* protótipo fig 4 */
+.proto{
+  background:#04223C;border-radius:var(--radius);padding:22px;color:#D8EAF8;
+  font-family:'IBM Plex Mono';font-size:.82rem;box-shadow:var(--sombra);margin:18px 0 8px;overflow-x:auto;
+}
+.proto .barra-titulo{color:#fff;font-weight:500;border-bottom:1px solid rgba(255,255,255,.18);padding-bottom:10px;margin-bottom:14px}
+.proto .linha{padding:5px 0;white-space:nowrap}
+.proto .dim-a{color:#7FE0A8}.proto .dim-s{color:#FFD37F}.proto .dim-g{color:#8FCBFF}.proto .dim-c{color:#C6BCFF}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin:0 3px;vertical-align:middle}
+.dv{background:var(--verde)}.da{background:var(--amarelo)}.dr{background:var(--vermelho)}
+.proto .sep{border-top:1px dashed rgba(255,255,255,.22);margin:12px 0}
+.proto .prog{letter-spacing:1px}
+
+/* referências */
+.refs li{margin-bottom:14px;padding-left:14px;border-left:3px solid var(--azul-agua);list-style:none;font-size:.95rem;max-width:80ch}
+
+footer{
+  background:var(--azul-profundo);color:#BFD9EE;text-align:center;
+  padding:30px 20px;font-size:.85rem;
+}
+footer b{color:#fff}
+.btn-topo{
+  display:inline-block;margin-top:34px;font-family:'Archivo';font-weight:600;font-size:.85rem;
+  color:var(--azul-cogerh);background:var(--azul-nevoa);border:1px solid var(--linha);
+  padding:10px 18px;border-radius:99px;cursor:pointer;transition:.2s;
+}
+.btn-topo:hover{background:var(--azul-cogerh);color:#fff}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-inner">
+    <a class="brand" href="#" onclick="go('inicio');return false;">
+      <svg class="drop" viewBox="0 0 24 24" fill="none"><path d="M12 2C12 2 5 10.2 5 15a7 7 0 0 0 14 0c0-4.8-7-13-7-13Z" fill="#5FB4E5"/><path d="M9 15.5a3 3 0 0 0 3 3" stroke="#00294D" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <span class="brand-name">MIS-COGERH<small>PTT · PPAC-PROF · UFC</small></span>
+    </a>
+    <button class="hamb" aria-label="Abrir menu" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+    <nav class="menu" id="menu">
+      <button data-p="inicio" class="active" onclick="go('inicio')">Início</button>
+      <button data-p="metodologia" onclick="go('metodologia')">Metodologia</button>
+      <button data-p="proposta" onclick="go('proposta')">Proposta do Produto</button>
+      <button data-p="resultados" onclick="go('resultados')">Resultados</button>
+      <button data-p="referencias" onclick="go('referencias')">Referências</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ================= INÍCIO ================= -->
+<section class="page show" id="inicio">
+  <div class="hero">
+    <div class="hero-inner">
+      <span class="tag">RELATÓRIO PARCIAL · JULHO/2026</span>
+      <h1>Modelo Integrado de Sustentabilidade e Controladoria</h1>
+      <p>Produto Técnico-Tecnológico (PTT) para a futura Gerência Regional do Crato/CE da COGERH — integrando indicadores de desempenho hídrico e energético, governança ESG, controladoria e gamificação em um único instrumento de gestão.</p>
+      <div class="meta">
+        <div><b>Autores</b>Ana, Daniel e Sósthenis</div>
+        <div><b>Orientação</b>Profa. Alessandra C. Vasconcelos</div>
+        <div><b>Programa</b>Mestrado Profissional em Administração e Controladoria — UFC</div>
+        <div><b>Metas</b>Metodologia por etapa · Matriz de indicadores (vi)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="video-block">
+    <span class="eyebrow">Conceito Inicial do PTT</span>
+    <h3 style="margin-top:4px">Produto Crato Sustentável</h3>
+    <div class="video-frame">
+      <video controls preload="metadata" id="videoPtt" style="display:none">
+        <source src="Produto_Crato_Sustentavel.mp4" type="video/mp4">
+      </video>
+      <div class="video-fallback" id="videoFallback">
+        <div class="play"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M6 4l14 8-14 8V4Z" fill="#fff"/></svg></div>
+        <strong style="color:#fff;font-family:'Archivo'">Conceito inicial do PTT — vídeo de apresentação</strong>
+        <span style="font-size:.85rem">Coloque o arquivo <code class="mono">Produto_Crato_Sustentavel.mp4</code> na mesma pasta desta página para reproduzir aqui.</span>
+      </div>
+    </div>
+    <p class="video-caption">Vídeo "Produto_Crato_Sustentavel" — apresentação conceitual do Modelo Integrado de Sustentabilidade e Controladoria.</p>
+  </div>
+
+  <span class="eyebrow">Estrutura do Modelo</span>
+  <h2 class="title">Quatro dimensões, um instrumento</h2>
+  <div class="dims">
+    <div class="dim-card"><div class="letra" style="background:#1F7A4D">A</div><h4>Ambiental</h4><p>Fotovoltaica · poço profundo · LED · drenagem pluvial</p></div>
+    <div class="dim-card"><div class="letra" style="background:#B06A00">S</div><h4>Social</h4><p>Capacitação · acessibilidade · GEO Verde</p></div>
+    <div class="dim-card"><div class="letra">G</div><h4>Governança</h4><p>Rastreabilidade · responsabilização · transparência</p></div>
+    <div class="dim-card"><div class="letra" style="background:#5A4FB5">C</div><h4>Controladoria</h4><p>Rotinas · conformidade · tempestividade</p></div>
+  </div>
+  <div class="callout" style="margin-top:26px">
+    <p><strong>GEO Verde</strong> atua como eixo transversal de gamificação e o <strong>Dashboard MIS-COGERH</strong> garante visibilidade, metas, divulgação e capacitação.</p>
+  </div>
+</section>
+
+<!-- ================= METODOLOGIA ================= -->
+<section class="page" id="metodologia">
+  <span class="eyebrow">Seção 2</span>
+  <h2 class="title">Metodologia</h2>
+  <p class="lead">A presente pesquisa possui abordagem qualitativa, com objetivos descritivos e explicativos, utilizando o estudo de caso como procedimento técnico para análise da Companhia de Gestão dos Recursos Hídricos do Ceará (COGERH), tendo como unidade de aplicação a futura Gerência Regional do Crato/CE. Como principal procedimento metodológico, adotou-se a análise documental, fundamentada no exame de documentos institucionais relacionados às práticas de sustentabilidade e governança ESG desenvolvidas pela organização.</p>
+  <p>Os documentos utilizados na pesquisa foram solicitados junto aos setores responsáveis da COGERH, contemplando relatórios gerenciais, indicadores de desempenho, normativos internos, documentos técnicos da futura sede regional do Crato, registros do Programa GEO Verde e informações referentes ao Sistema de Monitoramento Ambiental Sustentável da COGERH (SMAS-COGERH). A utilização desses documentos permitirá compreender os mecanismos atualmente empregados pela organização para monitoramento de resultados, controle gerencial e promoção da sustentabilidade institucional.</p>
+  <p>O desenvolvimento da pesquisa será estruturado em três etapas principais.</p>
+
+  <h3>2.1 Identificação dos Indicadores de Desempenho Hídrico e Energético</h3>
+  <p>Nesta etapa será realizada uma análise documental dos relatórios gerenciais, painéis de acompanhamento, documentos técnicos e demais registros institucionais que contenham informações relacionadas ao monitoramento do consumo de água e energia. O objetivo consiste em identificar os indicadores utilizados pela COGERH para avaliar a eficiência hídrica e energética de suas unidades regionais, bem como compreender os critérios empregados para mensuração, acompanhamento e avaliação de resultados.</p>
+  <p>A análise será conduzida por meio da análise de conteúdo documental, buscando identificar aspectos como finalidade do indicador, método de cálculo, periodicidade de monitoramento, unidade responsável pelo acompanhamento e sua utilização nos processos decisórios da organização. Os indicadores identificados serão sistematizados de forma a evidenciar sua contribuição para a gestão sustentável dos recursos e para o controle gerencial da instituição.</p>
+  <p>Ao final desta etapa, espera-se obter um diagnóstico dos instrumentos de monitoramento atualmente utilizados pela COGERH, evidenciando como esses indicadores contribuem para a avaliação de desempenho e para o alcance dos objetivos institucionais relacionados à sustentabilidade.</p>
+
+  <h3>2.2 Análise do Sistema SMAS-COGERH como Ferramenta de Controle Gerencial</h3>
+  <p>A segunda etapa será dedicada à análise da viabilidade de implantação do Sistema de Monitoramento Ambiental Sustentável da COGERH (SMAS-COGERH), plataforma baseada em tecnologia de Internet das Coisas (IoT) utilizada para coleta, processamento e disponibilização de informações relacionadas ao consumo de recursos e ao desempenho ambiental das redes unidades organizacionais. Essa etapa seria uma fase preliminar para a elaboração de um produto futuro.</p>
+
+  <h3>2.3 Avaliação do Programa GEO Verde e da Mudança da Cultura Organizacional</h3>
+  <p>A terceira etapa consistirá na análise do Programa GEO Verde, iniciativa de gamificação desenvolvida pela COGERH com o propósito de incentivar a adoção de práticas sustentáveis pelos colaboradores. A metodologia empregada será baseada na análise documental dos normativos, regulamentos, relatórios de desempenho, materiais de divulgação e demais registros institucionais relacionados ao programa.</p>
+  <p>A análise buscará identificar os mecanismos de gamificação adotados, tais como pontuação, premiações, rankings, desafios e formas de reconhecimento institucional. Em seguida, será realizada uma avaliação qualitativa da relação entre esses mecanismos e os objetivos organizacionais de sustentabilidade, observando como a iniciativa busca estimular mudanças comportamentais e promover maior engajamento dos colaboradores.</p>
+  <p>Para fins analíticos, serão considerados referenciais teóricos relacionados à cultura organizacional, sustentabilidade e gamificação, permitindo interpretar de que forma o programa contribui para a incorporação de valores sustentáveis no ambiente de trabalho. Os resultados serão sistematizados em uma análise descritiva dos fatores que favorecem o fortalecimento da cultura organizacional voltada à sustentabilidade.</p>
+  <p>Ao final da etapa, espera-se compreender o papel do Programa GEO Verde como instrumento de transformação cultural e de apoio à implementação das estratégias institucionais relacionadas à sustentabilidade e à governança ESG.</p>
+
+  <h3>2.4 Coleta de dados: fontes e instrumentos</h3>
+  <p>A coleta combina duas estratégias complementares: <strong>análise documental</strong> usando dados secundários, oriundos de documentos institucionais formalmente solicitados junto aos setores responsáveis da COGERH, como relatórios gerenciais, indicadores de desempenho, normativos internos, documentos técnicos da futura sede regional do Crato e registros do Programa GEO Verde; e <strong>entrevistas técnicas e observação complementar</strong>, constituindo dados primários, sendo estas últimas aplicadas apenas nas etapas em que a documentação institucional seja insuficiente para operacionalizar os indicadores ou validar as escolhas metodológicas.</p>
+
+  <h3>2.5 Tratamento e análise dos dados</h3>
+  <p>Os dados documentais são tratados por meio de análise de conteúdo temática (BARDIN, 2011), com categorização a priori nas dimensões Ambiental, Social, Governança e Controladoria (A/S/G/C) que estruturam o modelo proposto. Os dados eventualmente coletados na etapa de validação (entrevista e instrumento estruturado) são transcritos, codificados e incorporados ao relatório de validação institucional. A triangulação entre fontes documentais, depoimentos técnicos e referencial normativo confere validade construtiva ao estudo de caso.</p>
+
+  <h3>2.6 Limitações metodológicas e estratégias de mitigação</h3>
+  <div class="tabela-wrap">
+    <table>
+      <caption>Quadro 1 — Limitações e estratégias de mitigação</caption>
+      <thead><tr><th>Limitação identificada</th><th>Estratégia de mitigação</th></tr></thead>
+      <tbody>
+        <tr><td>Unidade ainda não implantada: ausência de dados históricos próprios da futura sede</td><td>Uso de gerência regional do Crato atualmente existente como linha de base comparativa para estimar o impacto potencial (Δ)</td></tr>
+        <tr><td>Acesso a documentos internos condicionado à autorização institucional</td><td>Solicitação formal junto à Secretaria Executiva e às gerências responsáveis; uso complementar de dados públicos da COGERH</td></tr>
+        <tr><td>Escopo do produto limitado a um protótipo de baixa fidelidade</td><td>Registro explícito do SMAS-COGERH (sensoriamento IoT) como trabalho futuro, fora do escopo do presente PTT</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>2.7 Validação da Proposta e Mensuração do Impacto Potencial</h3>
+  <p>Após a elaboração da proposta do produto técnico-tecnológico, será realizada uma avaliação junto ao gestor ou responsável institucional da área relacionada à sua aplicação. O objetivo dessa etapa consiste em obter a percepção do especialista quanto à utilidade, aplicabilidade, clareza e aderência da proposta às necessidades da organização.</p>
+  <p>A coleta dessa percepção ocorrerá por meio de instrumento estruturado de avaliação, permitindo identificar pontos fortes, oportunidades de aperfeiçoamento e potencial de utilização do produto no contexto organizacional da COGERH.</p>
+  <p>Adicionalmente, será realizada uma análise do impacto potencial da proposta, considerando sua capacidade de contribuir para o aprimoramento do monitoramento de indicadores, para o fortalecimento dos mecanismos de controle gerencial, para o incentivo à sustentabilidade institucional e para a melhoria do processo de tomada de decisão. Essa avaliação terá caráter prospectivo, buscando evidenciar os benefícios esperados da implementação do produto e sua contribuição para a governança organizacional.</p>
+  <button class="btn-topo" onclick="go('proposta')">Próxima seção: Proposta do Produto →</button>
+</section>
+
+<!-- ================= PROPOSTA ================= -->
+<section class="page" id="proposta">
+  <span class="eyebrow">Seção 3</span>
+  <h2 class="title">Proposta do Produto Técnico-Tecnológico</h2>
+  <p class="lead">O Produto Técnico-Tecnológico proposto consiste no desenvolvimento de um Modelo Integrado de Sustentabilidade e Controladoria para a futura Gerência Regional do Crato/CE da COGERH, concebido como instrumento de apoio ao monitoramento, à avaliação de desempenho e à tomada de decisão. A proposta busca integrar práticas de sustentabilidade, governança e controladoria em uma estrutura gerencial capaz de fornecer informações relevantes para o acompanhamento dos resultados institucionais.</p>
+  <p>A construção do modelo será fundamentada nas evidências obtidas ao longo da pesquisa, especialmente a partir da identificação dos indicadores de desempenho hídrico e energético utilizados pela organização, da análise do Sistema de Monitoramento Ambiental Sustentável da COGERH como ferramenta de suporte à decisão e da avaliação do Programa GEO Verde como mecanismo de fortalecimento da cultura organizacional voltada à sustentabilidade.</p>
+  <p>Como elemento estruturante do modelo, será elaborada uma matriz de indicadores, organizada em dimensões relacionadas à sustentabilidade, à governança e à controladoria. Essa matriz terá a função de sistematizar os indicadores identificados durante a pesquisa, definindo critérios de mensuração, fontes de informação, responsáveis pelo acompanhamento, periodicidade de monitoramento e evidências de comprovação. Dessa forma, a matriz atuará como instrumento operacional do modelo proposto, permitindo traduzir os objetivos institucionais em métricas passíveis de acompanhamento e avaliação.</p>
+
+  <div class="tabela-wrap">
+    <table>
+      <caption>Figura 1 — Quadro de indicadores</caption>
+      <thead><tr><th>Dim.</th><th>Indicador</th><th>Fórmula</th><th>Fonte</th><th>Responsável</th><th>Period.</th><th>Evidência</th></tr></thead>
+      <tbody>
+        <tr><td><span class="badge bA">A</span></td><td>Eficiência hídrica</td><td><span class="formula">m³ de água potável ÷ nº de servidores</span></td><td>Hidrômetro + poço</td><td>G. Ambiental</td><td>Mensal</td><td>Leitura / conta</td></tr>
+        <tr><td><span class="badge bA">A</span></td><td>Autossuficiência energética</td><td><span class="formula">(kWh FV gerado ÷ kWh consumido) × 100</span></td><td>Inversor FV + fatura ENEL</td><td>G. Manutenção</td><td>Mensal</td><td>Relatório de geração + fatura</td></tr>
+        <tr><td><span class="badge bA">A</span></td><td>Aproveitamento pluvial</td><td><span class="formula">m³ pluvial reusado ÷ m³ de demanda não potável</span></td><td>Medição do reservatório de drenagem</td><td>G. Ambiental</td><td>Mensal</td><td>Registro de medição</td></tr>
+        <tr><td><span class="badge bS">S</span></td><td>Capacitação em sustentabilidade</td><td><span class="formula">(servidores capacitados ÷ total) × 100</span></td><td>Registros de treinamento</td><td>G. Regional / RH</td><td>Semestral</td><td>Lista de presença / certificado</td></tr>
+        <tr><td><span class="badge bS">S</span></td><td>Acessibilidade e conforto</td><td><span class="formula">(itens NBR 9050 atendidos ÷ total) × 100</span></td><td>Projeto + vistoria</td><td>G. Manutenção</td><td>Anual</td><td>Laudo / checklist</td></tr>
+        <tr><td><span class="badge bS">S</span></td><td>Engajamento no GEO Verde</td><td><span class="formula">(participantes ativos ÷ total) × 100</span></td><td>Plataforma GEO Verde</td><td>G. Regional</td><td>Trimestral</td><td>Relatório de gamificação</td></tr>
+        <tr><td><span class="badge bG">G</span></td><td>Cobertura de responsáveis</td><td><span class="formula">(indicadores c/ responsável ÷ total) × 100</span></td><td>Matriz de responsabilidades</td><td>Controladoria</td><td>Trimestral</td><td>Matriz assinada</td></tr>
+        <tr><td><span class="badge bG">G</span></td><td>Rastreabilidade de evidências</td><td><span class="formula">(indicadores c/ evidência ÷ total) × 100</span></td><td>Repositório de evidências</td><td>Controladoria</td><td>Trimestral</td><td>Relatório de auditoria</td></tr>
+        <tr><td><span class="badge bG">G</span></td><td>Transparência / divulgação</td><td><span class="formula">relatórios divulgados ÷ previstos</span></td><td>Dashboard / portal</td><td>G. Regional</td><td>Semestral</td><td>Publicação</td></tr>
+        <tr><td><span class="badge bC">C</span></td><td>Cumprimento de rotinas</td><td><span class="formula">(rotinas realizadas ÷ previstas) × 100</span></td><td>Cronograma de controle</td><td>Controladoria</td><td>Trimestral</td><td>Atas / relatórios</td></tr>
+        <tr><td><span class="badge bC">C</span></td><td>Tratamento de não conformidades</td><td><span class="formula">(NC tratadas ÷ NC identificadas) × 100</span></td><td>Registro de NC</td><td>Controladoria</td><td>Trimestral</td><td>Plano de ação</td></tr>
+        <tr><td><span class="badge bC">C</span></td><td>Tempestividade de reporte</td><td><span class="formula">(relatórios no prazo ÷ total) × 100</span></td><td>Controle interno</td><td>Controladoria</td><td>Trimestral</td><td>Relatório datado</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="legenda"><b>Legenda:</b> A — Ambiental · S — Social · G — Governança · C — Controladoria.</p>
+  <p class="fonte-nota">Fonte: Elaborado pelo autor</p>
+
+  <p>Além da matriz de indicadores, o produto contemplará diretrizes para utilização das informações geradas para o aproveitamento de iniciativas de engajamento organizacional, como o Programa GEO Verde, no fortalecimento das práticas de sustentabilidade institucional. Busca-se, assim, oferecer uma abordagem integrada que articule aspectos tecnológicos, gerenciais e comportamentais em um único instrumento de gestão.</p>
+  <p>Durante sua construção do produto, o modelo passará por validação da diretoria responsável pela área relacionada à sua aplicação, com o objetivo de avaliar sua clareza, aplicabilidade, utilidade prática e aderência às necessidades da organização. As percepções obtidas serão utilizadas para aperfeiçoar a proposta e verificar sua adequação ao contexto institucional da COGERH.</p>
+
+  <h3>Figura 2 — Dashboard dos indicadores</h3>
+  <div class="proto" role="img" aria-label="Representação do Painel de Desempenho ESG e Compliance">
+    <div class="barra-titulo">≡ &nbsp;Painel de Desempenho ESG &amp; Compliance <span style="float:right">Período: Jan–Dez 2023 ▾</span></div>
+    <div class="linha dim-a">▌Dimensão Ambiental (A)</div>
+    <div class="linha">Eficiência Hídrica: 14.2 m³/servidor <span class="dot dr"></span>Abaixo da Meta &nbsp;|&nbsp; Autossuf. Energética (FV): 45% <span class="dot da"></span>Em Evolução &nbsp;|&nbsp; Aproveit. Pluvial: 72% da demanda não potável</div>
+    <div class="linha dim-s">▌Dimensão Social (S)</div>
+    <div class="linha">Capacitação em Sustentabilidade: 88% do total &nbsp;|&nbsp; Engajamento GEO Verde: 245/300 participantes</div>
+    <div class="linha dim-g">▌Dimensão Governança (G)</div>
+    <div class="linha">Cobertura de Indicadores vs Responsáveis: 92.5% &nbsp;|&nbsp; Rastreabilidade de Evidências: target 100%</div>
+    <div class="linha dim-c">▌Dimensão Controladoria (C)</div>
+    <div class="linha">Cumprimento de Rotinas: 89% realizado &nbsp;|&nbsp; Tratamento de NC: 82% &nbsp;|&nbsp; Tempestividade de Reporte: 94% no prazo</div>
+  </div>
+  <p class="legenda"><b>Legenda:</b> A — Ambiental · S — Social · G — Governança · C — Controladoria.</p>
+  <p class="fonte-nota">Fonte: Elaborado pelo autor</p>
+
+  <p>Por fim, será realizada uma análise do impacto potencial ambiental, institucional e ambiental do produto, considerando sua capacidade de contribuir para o aprimoramento do monitoramento de resultados, para o fortalecimento dos mecanismos de controle gerencial, para a ampliação do uso de informações na tomada de decisão e para a consolidação das práticas de sustentabilidade e governança na organização. Espera-se que o modelo possa servir como referência para a gestão da futura Gerência Regional do Crato e, futuramente, ser adaptado para outras unidades da companhia.</p>
+  <button class="btn-topo" onclick="go('resultados')">Próxima seção: Resultados →</button>
+</section>
+
+<!-- ================= RESULTADOS ================= -->
+<section class="page" id="resultados">
+  <span class="eyebrow">Seção 4</span>
+  <h2 class="title">Resultados</h2>
+  <p class="lead">Os resultados a seguir estão organizados segundo as quatro etapas definidas, seguidos da arquitetura conceitual e do protótipo do produto que consolidam a proposta.</p>
+
+  <h3>4.1 Indicadores de desempenho hídrico e energético</h3>
+  <p>A partir da análise documental, foi consolidada uma matriz com 12 indicadores, distribuídos igualmente entre as quatro dimensões do modelo. Os indicadores ambientais estão ancorados diretamente nos elementos construtivos previstos para a nova sede (energia fotovoltaica, poço profundo, iluminação LED e drenagem pluvial), conferindo rastreabilidade entre o investimento físico e o desempenho de sustentabilidade mensurado.</p>
+  <div class="tabela-wrap">
+    <table>
+      <caption>Quadro 2 — Matriz de indicadores (versão 1)</caption>
+      <thead><tr><th>Dim.</th><th>Indicador</th><th>Fórmula</th><th>Fonte</th><th>Responsável</th><th>Period.</th></tr></thead>
+      <tbody>
+        <tr><td><span class="badge bA">A</span></td><td>Eficiência hídrica</td><td><span class="formula">m³ de água potável ÷ nº de servidores</span></td><td>Hidrômetro + poço</td><td>G. Ambiental</td><td>Mensal</td></tr>
+        <tr><td><span class="badge bA">A</span></td><td>Autossuficiência energética</td><td><span class="formula">(kWh FV gerado ÷ kWh consumido) × 100</span></td><td>Inversor FV + fatura</td><td>G. Manutenção</td><td>Mensal</td></tr>
+        <tr><td><span class="badge bA">A</span></td><td>Aproveitamento pluvial</td><td><span class="formula">m³ pluvial reusado ÷ m³ demanda não potável</span></td><td>Medição do reservatório</td><td>G. Ambiental</td><td>Mensal</td></tr>
+        <tr><td><span class="badge bS">S</span></td><td>Capacitação em sustentabilidade</td><td><span class="formula">(servidores capacitados ÷ total) × 100</span></td><td>Registros de treinamento</td><td>G. Regional / RH</td><td>Semestral</td></tr>
+        <tr><td><span class="badge bS">S</span></td><td>Acessibilidade e conforto</td><td><span class="formula">(itens NBR 9050 atendidos ÷ total) × 100</span></td><td>Projeto + vistoria</td><td>G. Manutenção</td><td>Anual</td></tr>
+        <tr><td><span class="badge bS">S</span></td><td>Engajamento no GEO Verde</td><td><span class="formula">(participantes ativos ÷ total) × 100</span></td><td>Plataforma GEO Verde</td><td>G. Regional</td><td>Trimestral</td></tr>
+        <tr><td><span class="badge bG">G</span></td><td>Cobertura de responsáveis</td><td><span class="formula">(indicadores c/ responsável ÷ total) × 100</span></td><td>Matriz de responsabilidades</td><td>Controladoria</td><td>Trimestral</td></tr>
+        <tr><td><span class="badge bG">G</span></td><td>Rastreabilidade de evidências</td><td><span class="formula">(indicadores c/ evidência ÷ total) × 100</span></td><td>Repositório de evidências</td><td>Controladoria</td><td>Trimestral</td></tr>
+        <tr><td><span class="badge bG">G</span></td><td>Transparência / divulgação</td><td><span class="formula">relatórios divulgados ÷ previstos</span></td><td>Dashboard / portal</td><td>G. Regional</td><td>Semestral</td></tr>
+        <tr><td><span class="badge bC">C</span></td><td>Cumprimento de rotinas</td><td><span class="formula">(rotinas realizadas ÷ previstas) × 100</span></td><td>Cronograma de controle</td><td>Controladoria</td><td>Trimestral</td></tr>
+        <tr><td><span class="badge bC">C</span></td><td>Tratamento de não conformidades</td><td><span class="formula">(NC tratadas ÷ NC identificadas) × 100</span></td><td>Registro de NC</td><td>Controladoria</td><td>Trimestral</td></tr>
+        <tr><td><span class="badge bC">C</span></td><td>Tempestividade de reporte</td><td><span class="formula">(relatórios no prazo ÷ total) × 100</span></td><td>Controle interno</td><td>Controladoria</td><td>Trimestral</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="legenda"><b>Legenda:</b> A — Ambiental; S — Social; G — Governança; C — Controladoria. Fonte: elaboração própria (2026).</p>
+
+  <h3>4.2 O SMAS-COGERH como ferramenta de suporte à decisão</h3>
+  <p>O Sistema de Monitoramento Ambiental Sustentável da COGERH (SMAS-COGERH), baseado em tecnologia de Internet das Coisas (IoT), destina-se à coleta, ao processamento e à disponibilização automatizada de informações sobre consumo de recursos e desempenho ambiental das unidades organizacionais. No estágio atual do produto, a coleta dos indicadores do Quadro 2 permanece manual; o SMAS-COGERH é registrado como trabalho futuro, que substituiria progressivamente essa coleta manual por sensoriamento automatizado, sem, contudo, integrar o escopo do protótipo ora apresentado.</p>
+
+  <h3>4.3 O Programa GEO Verde e a mudança da cultura organizacional</h3>
+  <p>O GEO Verde — Gestão Ecoeficiente Operacional é o componente de gamificação do modelo, funcionando como instrumento de mudança da cultura organizacional. Ele traduz metas ambientais e de governança em mecânicas de pontuação, reconhecimento e ranqueamento, alimentando diretamente o indicador social de engajamento apresentado no Quadro 2.</p>
+  <div class="tabela-wrap">
+    <table>
+      <caption>Quadro 3 — Mecânicas de gamificação do Programa GEO Verde</caption>
+      <thead><tr><th>Mecânica</th><th>Descrição</th><th>Indicador vinculado</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Pontuação por meta atingida</strong></td><td>Cada indicador que atinge a meta trimestral ou mensal gera pontos ao servidor ou equipe responsável pelo registro e coleta</td><td>Todos os indicadores A/S/G/C</td></tr>
+        <tr><td><strong>Ranking de engajamento</strong></td><td>Painel público com classificação dos servidores por nível de participação nas rotinas do modelo e nas capacitações</td><td>Engajamento no GEO Verde; Transparência/divulgação</td></tr>
+        <tr><td><strong>Selos de reconhecimento</strong></td><td>Emblemas virtuais concedidos por conquistas específicas (ex.: eficiência hídrica, geração fotovoltaica, tratamento de não conformidades)</td><td>Eficiência hídrica; Autossuficiência energética; Tratamento de NC</td></tr>
+        <tr><td><strong>Missões mensais</strong></td><td>Desafios coletivos com prazo definido (ex.: reduzir consumo hídrico em 5% no mês), divulgados no dashboard e no mural de capacitação</td><td>Eficiência hídrica; Aproveitamento pluvial</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="fonte-nota">Fonte: elaboração própria (2026).</p>
+
+  <h3>4.4 Arquitetura conceitual do modelo proposto</h3>
+  <p>As evidências reunidas nas etapas anteriores foram integradas em um modelo único, estruturado em quatro dimensões articuladas em torno dos elementos construtivos da nova sede e dos requisitos de governança e controladoria da COGERH, com o Programa GEO Verde funcionando como eixo transversal de engajamento. A Figura 3 ilustra essa arquitetura.</p>
+  <div class="arq" role="img" aria-label="Arquitetura conceitual do MIS-COGERH">
+    <div class="topo">MIS-COGERH — Modelo Integrado de Sustentabilidade e Controladoria</div>
+    <div class="camada"><span class="rotulo">A — Ambiental</span><span class="cont">fotovoltaica · poço profundo · LED · drenagem pluvial</span></div>
+    <div class="camada"><span class="rotulo">S — Social</span><span class="cont">capacitação · acessibilidade · GEO Verde</span></div>
+    <div class="camada"><span class="rotulo">G — Governança</span><span class="cont">rastreabilidade · responsabilização · transparência</span></div>
+    <div class="camada"><span class="rotulo">C — Controladoria</span><span class="cont">rotinas · conformidade · tempestividade</span></div>
+    <div class="camada eixo"><span class="rotulo">GEO Verde</span><span class="cont">eixo transversal de gamificação</span></div>
+    <div class="camada base"><span class="cont"><strong>Dashboard MIS-COGERH</strong> — visibilidade, metas, divulgação e capacitação</span></div>
+  </div>
+  <p class="fonte-nota">Figura 3 — Arquitetura conceitual do MIS-COGERH. Fonte: elaboração própria (2026).</p>
+
+  <h3>4.5 Protótipo do dashboard de acompanhamento</h3>
+  <p>Coerente com o objetivo específico (d), foi especificado um protótipo de baixa fidelidade para consolidar visualmente os indicadores do Quadro 2, o acompanhamento das etapas da pesquisa e a divulgação de resultados. O Quadro 4 sintetiza os requisitos funcionais do protótipo, e a Figura 4 ilustra sua estrutura.</p>
+  <div class="tabela-wrap">
+    <table>
+      <caption>Quadro 4 — Requisitos funcionais do dashboard</caption>
+      <thead><tr><th>Função</th><th>Descrição funcional</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Integração de dados</strong></td><td>Consolida as matrizes A/S/G/C, convertendo a coleta bruta em indicador calculado e status semafórico (verde/amarelo/vermelho)</td></tr>
+        <tr><td><strong>Acompanhamento das etapas</strong></td><td>Sinalização por semáforo do andamento de cada etapa da pesquisa, com percentual de execução e prazo remanescente</td></tr>
+        <tr><td><strong>Divulgação de resultados</strong></td><td>Painel de transparência para publicação dos resultados consolidados por dimensão</td></tr>
+        <tr><td><strong>Aplicação de questionários</strong></td><td>Módulo de survey para o instrumento estruturado de validação institucional (etapa 4)</td></tr>
+        <tr><td><strong>Capacitação</strong></td><td>Mural de treinamentos vinculado ao indicador de capacitação em sustentabilidade</td></tr>
+        <tr><td><strong>Integração GEO Verde</strong></td><td>Ranking e pontuação de engajamento por servidor, exibindo selos de reconhecimento</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="fonte-nota">Fonte: elaboração própria (2026).</p>
+
+  <div class="proto" role="img" aria-label="Protótipo de baixa fidelidade do dashboard MIS-COGERH">
+    <div class="barra-titulo">MIS-COGERH | Dashboard de Sustentabilidade e Controladoria — G.R. Crato/CE</div>
+    <div class="linha dim-a">Ambiental (A): eficiência hídrica <span class="dot dv"></span> | autossuf. energética <span class="dot da"></span> | aproveit. pluvial <span class="dot dv"></span></div>
+    <div class="linha dim-s">Social (S): capacitação <span class="dot dv"></span> | acessibilidade <span class="dot da"></span> | GEO Verde <span class="dot dv"></span></div>
+    <div class="linha dim-g">Governança (G): cobertura resp. <span class="dot dv"></span> | rastreabilidade <span class="dot da"></span> | transparência <span class="dot dv"></span></div>
+    <div class="linha dim-c">Controladoria (C): cumpr. rotinas <span class="dot dv"></span> | trat. NCs <span class="dot da"></span> | tempestividade <span class="dot dv"></span></div>
+    <div class="sep"></div>
+    <div class="linha">GEO Verde — Ranking de engajamento: 1º Servidor A | 2º Servidor B | 3º Servidor C</div>
+    <div class="linha">Missão do mês: redução hídrica de 5% — prazo 15 dias</div>
+    <div class="sep"></div>
+    <div class="linha" style="color:#fff">Andamento das etapas da pesquisa</div>
+    <div class="linha prog">Etapa 1 ██████████ concluída</div>
+    <div class="linha prog">Etapa 2 ████░░░░░░ em andamento</div>
+    <div class="linha prog">Etapa 3 ██████░░░░ em andamento</div>
+    <div class="linha prog">Etapa 4 ░░░░░░░░░░ pendente</div>
+  </div>
+  <p class="legenda"><b>Legenda:</b> ● = semáforo (verde/amarelo/vermelho). Figura 4 — Protótipo de baixa fidelidade do dashboard MIS-COGERH. Fonte: elaboração própria (2026).</p>
+
+  <h3>4.6 Impacto potencial e validação institucional</h3>
+  <p>Como a futura Gerência Regional do Crato/CE ainda não está implantada, o impacto potencial é estimado por comparação entre a linha de base da gerência regional atualmente existente e a meta projetada para a nova sede. O impacto (Δ) corresponde à variação esperada entre ambas, conferindo base empírica à projeção.</p>
+  <div class="tabela-wrap">
+    <table>
+      <caption>Quadro 5 — Impacto potencial por dimensão</caption>
+      <thead><tr><th>Dimensão</th><th>Indicador-âncora</th><th>Linha de base</th><th>Meta potencial</th><th>Medição do Δ</th></tr></thead>
+      <tbody>
+        <tr><td><span class="badge bA">A</span> Ambiental</td><td>Autossuficiência energética</td><td>Fatura de gerência regional existente (kWh consumido da rede)</td><td>Elevação ≥ 30% via FV instalado</td><td>Δ de autonomia energética pré × pós</td></tr>
+        <tr><td><span class="badge bS">S</span> Social</td><td>Capacitação em sustentabilidade</td><td>Histórico de treinamentos RH-COGERH</td><td>Ampliação da cobertura anual de capacitação</td><td>Δ de cobertura de treinamento por ciclo</td></tr>
+        <tr><td><span class="badge bG">G</span> Governança</td><td>Rastreabilidade de evidências</td><td>Ausência de registros formais (≈ 0%)</td><td>Indicadores com evidência registrada em repositório</td><td>Ganho de auditabilidade (pp de cobertura)</td></tr>
+        <tr><td><span class="badge bC">C</span> Controladoria</td><td>Cumprimento de rotinas</td><td>Sem rotina formal de controle instituída</td><td>Rotinas cumpridas conforme cronograma</td><td>Ganho de controle gerencial (% de aderência)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="fonte-nota">Fonte: elaboração própria (2026).</p>
+  <p>A validação institucional (etapa 4) será conduzida junto a gestor(es) da COGERH por meio de instrumento estruturado, permitindo verificar clareza, aplicabilidade e utilidade prática do modelo, além de subsidiar seu aperfeiçoamento antes da consolidação do relatório técnico conclusivo.</p>
+  <button class="btn-topo" onclick="go('referencias')">Próxima seção: Referências →</button>
+</section>
+
+<!-- ================= REFERÊNCIAS ================= -->
+<section class="page" id="referencias">
+  <span class="eyebrow">Bibliografia</span>
+  <h2 class="title">Referências</h2>
+  <ul class="refs">
+    <li>BARDIN, Laurence. <strong>Análise de conteúdo.</strong> Lisboa: Edições 70, 2011.</li>
+    <li>BRASIL. <strong>Lei nº 14.133, de 1º de abril de 2021.</strong> Lei de Licitações e Contratos Administrativos. Brasília, DF: Presidência da República, 2021.</li>
+    <li>COGERH — Companhia de Gestão dos Recursos Hídricos do Ceará. <strong>Documentos institucionais.</strong> Fortaleza: COGERH, 2026.</li>
+    <li>ISO 14001:2015. <strong>Sistemas de gestão ambiental — Requisitos com orientações para uso.</strong> Genebra: ISO, 2015.</li>
+    <li>YIN, Robert K. <strong>Estudo de caso: planejamento e métodos.</strong> 5. ed. Porto Alegre: Bookman, 2018.</li>
+  </ul>
+  <button class="btn-topo" onclick="go('inicio')">← Voltar ao início</button>
+</section>
+
+</main>
+
+<footer>
+  <b>MIS-COGERH</b> · Produto Técnico-Tecnológico · Relatório Parcial<br>
+  Universidade Federal do Ceará · Programa de Pós-Graduação em Administração e Controladoria (PPAC-PROF)<br>
+  Ana, Daniel e Sósthenis · Profa. Alessandra C. Vasconcelos · Fortaleza — julho/2026
+</footer>
+
+<script>
+function go(id){
+  document.querySelectorAll('section.page').forEach(s=>s.classList.remove('show'));
+  document.getElementById(id).classList.add('show');
+  document.querySelectorAll('nav.menu button').forEach(b=>b.classList.toggle('active',b.dataset.p===id));
+  document.getElementById('menu').classList.remove('open');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleMenu(){document.getElementById('menu').classList.toggle('open')}
+
+/* Vídeo: exibe o player se o arquivo existir; senão mantém o placeholder */
+(function(){
+  const v=document.getElementById('videoPtt'), fb=document.getElementById('videoFallback');
+  v.addEventListener('loadedmetadata',()=>{v.style.display='block';fb.style.display='none';});
+  v.addEventListener('error',()=>{v.style.display='none';fb.style.display='flex';});
+  v.load();
+})();
+</script>
+</body>
+</html>
